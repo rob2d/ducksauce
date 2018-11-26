@@ -1,0 +1,39 @@
+@function font-sources($namespace, $fileBase, $exts...) {
+    $format : #{""};
+    $srcValue : #{""};
+
+    $i: 0;
+    @each $ext in $exts {
+        $query:#{''};
+        $i: ($i+1);
+
+        @if $ext == eot {
+            $format: format("embedded-opentype");
+            $query: #iefix;
+        } @else if $ext == woff {
+            $format: format("woff");
+        } @else if $ext == ttf {
+            $format: format("truetype");
+        } @else {
+            $format:#{""};
+        }
+        $srcValue: $srcValue url("./../fonts/#{$namespace}/#{$fileBase}.#{$ext}?#{$query}") $format; 
+        
+        @if $i!=length($exts) {
+            $srcValue : $srcValue#{', '} ;
+        }
+    }
+
+    @return $srcValue;
+}
+
+@mixin load-font-face($namespace, $fileBase, $exts...) {
+    @font-face { 
+        font-family : $namespace;
+        @if nth($exts, 1) == 'eot' {
+            src : url("./../fonts/#{$namespace}/#{$fileBase}.eot");
+        }
+
+        src : font-sources($namespace, $fileBase, $exts...);
+    } 
+}
