@@ -1,0 +1,4 @@
+client/style/*.* linguist-vendored
+client/style/**/*.* linguist-vendored
+client/*.html linguist-vendored
+client/fonts/**/*.* linguist-vendored
