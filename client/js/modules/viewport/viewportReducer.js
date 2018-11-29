@@ -38,9 +38,9 @@ const getInitialState = ()=> {
 
     return {
         viewportWidth,
-        viewportHeight     : getViewportHeight(),
+        viewportHeight : getViewportHeight(),   
         breakpoint : getBreakpoint(viewportWidth)
-    }
+    };
 };
 
 const reducer = ( state = { ...getInitialState() }, action ) => {
@@ -51,9 +51,9 @@ const reducer = ( state = { ...getInitialState() }, action ) => {
 
         case REFRESH_WINDOW_DIMENSIONS :
 
-            let viewportWidth       = getViewportWidth(),
-                viewportHeight      = getViewportHeight(),
-                breakpoint  = getBreakpoint(viewportWidth);
+            let viewportWidth = getViewportWidth(),
+                viewportHeight = getViewportHeight(),
+                breakpoint = getBreakpoint(viewportWidth);
 
             if(state.viewportWidth != viewportWidth || state.viewportHeight != viewportHeight) {
 

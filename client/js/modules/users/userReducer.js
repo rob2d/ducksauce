@@ -4,12 +4,10 @@ import {
     GET_USERS_REQUEST
 } from './userActions'
 import { actions as sessionActions } from 'session'
-import LoadingStates from 'constants/LoadingStates'
 
 const { LOGIN_SUCCESS } = sessionActions;
 
 const initialState = {
-    usersState : LoadingStates.IDLE,
     userMap    : new Map()
 };
 
@@ -22,14 +20,6 @@ const reducer = (state = { ...initialState }, { type, payload }) => {
             return Object.assign({ ...state }, { 
                 userMap 
             });
-        case GET_USERS_REQUEST : 
-            return Object.assign({ ...state }, {
-                usersState : LoadingStates.LOADING
-            });
-        case GET_USERS_ERROR :
-            return Object.assign({ ...state }, {
-                usersState : LoadingStates.ERROR
-            });
         case GET_USERS_SUCCESS : 
             userMap = state.userMap;
 
@@ -38,8 +28,7 @@ const reducer = (state = { ...initialState }, { type, payload }) => {
             });
 
             return Object.assign({ ...state }, {
-                usersState : LoadingStates.SUCCESS,
-                userMap    : new Map(userMap)
+                userMap : new Map(userMap)
             });
         default:
             return state;

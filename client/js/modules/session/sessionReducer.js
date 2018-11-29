@@ -7,23 +7,28 @@ import SessionStates from 'constants/SessionStates'
 
 const initialState = {
     sessionState : SessionStates.LOGGED_OUT,
-    username     : undefined
+    username     : undefined,
+    token        : undefined
 };
 
 const reducer = (state = { ...initialState }, { type, payload } ) => {
     switch(type) {
-        
-        // for now, we are just mocking a successful state
-
         case LOGIN_ERROR : 
+            return Object.assign({ ...state }, {
+                username : payload.username,
+                token : undefined,
+                sessionState : SessionStates.LOGGED_OUT
+            });
         case LOGIN_SUCCESS : 
             return Object.assign({ ...state }, {
                 username : payload.username,
+                token : payload.token,
                 sessionState : SessionStates.LOGGED_IN
             });
         case LOGOUT : 
             return Object.assign({ ...state }, {
                 username : undefined,
+                token : undefined,
                 sessionState : SessionStates.LOGGED_OUT
             });
         default:
