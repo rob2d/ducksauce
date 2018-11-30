@@ -20,17 +20,18 @@ class UserController extends ControllerClass {
 
     /**
      * retrieve a list of all users
+     * 
      * @param {Object} param0
-     * @param {Array<Number>|Number} param0.ids
+     * @param {Array<String>|String} param0.username username(s)
      * @param {Object} param0.pagination
      * @param {Object} param0.query
      */
-    getUsers ({ ids = undefined, pagination = undefined, query = undefined }) {
+    getUsers ({ username = undefined, pagination = undefined, query = undefined }) {
         const collection = this._app.get('db').collection(collectionNS);
         const keyValueSets = {};
         
-        if(ids) {
-            keyValueSets[keyField] = ids;
+        if(username) {
+            keyValueSets[keyField] = username;
         }
 
         return getEntries({ 
@@ -48,8 +49,6 @@ class UserController extends ControllerClass {
      * work here; need to first get data,
      * then verify username hasn't exist and
      * verify/compare password hash.
-     * 
-     * (skipping just for demo)
      * 
      * @param {Object} param0 
      * @param {String} param0.username

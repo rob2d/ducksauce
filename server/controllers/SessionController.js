@@ -1,5 +1,6 @@
+const bcrypt = require('bcrypt');
 const ControllerClass = global.require('utils/ControllerClass');
-const UserController  = require('./UserController');
+const UserController = require('./UserController');
 const TokenController = require('./TokenController');
 
 class SessionController extends ControllerClass {
@@ -13,22 +14,17 @@ class SessionController extends ControllerClass {
      */
     attemptLogin ({ username, password }) {
         return new Promise((resolve, reject) => {
-            UserController.getUsers({ ids : username })
-                .then( ([userEntry]) => {
-                    if(userEntry) {
-                        bcrypt.compare(password, userEntry.password)
-                            .then( isValidPW => {
-                                if(!isValidPW) { 
-                                    resolve(false); 
-                                }
-                                else {
-                                    TokenController.signToken(username)
-                                        .then( token => resolve({ user, token }) )
-                                        .catch( reject );
-                                }
-                            }).catch( reject );
-
-                    } else return(false);
+            UserController.getUsers({ username : username })
+                .then(([ user ]) => {
+                    if(user) {
+                        bcrypt.compare(password, user.password)
+                            .then( isValidPW => ( !isValidPW ? 
+                                Promise.resolve(false) :
+                                TokenController.signToken(user.username)
+                            )).then( token => resolve({ user, token }))
+                            .catch( reject );
+                            
+                    } else resolve(false);
                 }).catch( reject );
         });
     }

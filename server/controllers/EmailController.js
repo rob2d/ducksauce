@@ -4,7 +4,7 @@ var nodemailer = require('nodemailer');
 class EmailController extends ControllerClass {
     
     constructor () {
-
+        super();
         // set up email connection
         this.transporter = nodemailer.createTransport({
             service : 'gmail',

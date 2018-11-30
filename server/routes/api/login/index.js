@@ -13,14 +13,14 @@ router.post('/', (req, res) => {
 
     if(username && username.length && password && password.length) {
         SessionController.attemptLogin({ username, password })
-            .then( ([{ userEntry, token }]) => {
-                if(userEntry && token) {
+            .then(({ user, token }) => {
+                if(user && token) {
                     const { 
                         password, status, email, 
-                        ...user 
-                    } = userEntry;
+                        ...userFields 
+                    } = user;
                     
-                    res.status(200).json({ user, token });
+                    res.status(200).json({ user : userFields, token });
                 } else {
                     res.status(401).send({ message : 'user not found' });
                 }
@@ -28,7 +28,8 @@ router.post('/', (req, res) => {
                 handle500Error({ req, res, error });
             })
     } else {
-        res.status(500).json({ message: 'unknown error occured' });
+        res.status(500)
+            .json({ message: 'unknown error occured' });
     }
 });
 

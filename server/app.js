@@ -169,16 +169,13 @@ let host     = server.address().address,
     // SETUP DB CONNECTION  //
     // ==================== //
 
-
      createMongoConnection(process.env.DB_URI)
         .then( db => {
             app.set('db', db);
             app.get('eventHandler').emit('dbConnReady');
         })
         .catch( error => {
-            console.error(`error connecting to database: ${
-                    error.namespace} @ ${error.url}:`, error);
-
+            console.error(`error connecting to database: ${process.env.DB_URI}`);
             process.exit(1);
         });
 
