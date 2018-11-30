@@ -1,6 +1,4 @@
-import { 
-    toUpperSnakeCase
-} from 'common/nameConversions'
+import { toUpperSnakeCase } from 'common/nameConversions'
 
 // (this is from a W.I.P. library 
 // of mine that has not been exported

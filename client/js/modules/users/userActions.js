@@ -1,22 +1,13 @@
-import createAsyncActions from 'utils/redux-wings/createAsyncActions'
+import { createActions } from 'redux-wings'
 import api from 'api'
 
-/**
- * 
- * @property {String} GET_USERS_REQUEST
- * @property {String} GET_USERS_SUCCESS
- * @property {String} GET_USERS_ERROR
- * 
- * @property {function} getUsersRequest
- */
-const actions = {};
-
-createAsyncActions({
+const { actions, asyncReducer } = createActions({
     actions,
     sliceNamespace : 'users',
-    actionParams : [{
-        namespace : 'getUsers',
-        requestCaller () { return api.getUsers() }
+    actions : [{
+        namespace     : 'getUsers',
+        stateVariable : 'userState',
+        requestCaller : api.getUsers
     }
 ]});
 
@@ -27,9 +18,13 @@ const  {
     GET_USERS_ERROR
 } = actions;
 
-export default actions
+export default {
+    ...actions,
+    asyncReducer
+}
 
 export {
+    asyncReducer,
     getUsersRequest,
     GET_USERS_REQUEST,
     GET_USERS_ERROR,

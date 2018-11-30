@@ -1,4 +1,4 @@
-import createAsyncActions from 'utils/redux-wings/createAsyncActions'
+import { createActions } from 'redux-wings'
 import api from 'api'
 import appHistory from 'utils/appHistory'
 

@@ -2,14 +2,13 @@ const ControllerClass = global.require('utils/ControllerClass');
 var nodemailer = require('nodemailer');
 
 class EmailController extends ControllerClass {
+    
     constructor () {
-        super({ name : 'Email' });
-        
+        super();
         // set up email connection
-
         this.transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
+            service : 'gmail',
+            auth : {
                 user : process.env.EMAIL_ADDRESS,
                 pass : process.env.EMAIL_PASSWORD
             }
@@ -24,7 +23,7 @@ class EmailController extends ControllerClass {
      * @param {String} param0.message
      */
     sendEmail ({ recipients, subject, message }) {
-        return new Promise((resolve, reject)=> {
+        return new Promise((resolve, reject) => {
             const mailOptions = {
                 from    : process.env.EMAIL_ADDRESS,  
                 to      : recipients,   

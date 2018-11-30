@@ -1,6 +1,6 @@
 {
   "name": "ducksauce",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Rob's React/Redux/Routing/JSS + Node + MongoDB Quick Starter Sandbox",
   "main": "index.js",
   "scripts": {
@@ -45,6 +45,7 @@
     "redux-logger": "^3.0.6",
     "redux-promise-middleware": "^5.1.1",
     "redux-thunk": "^2.3.0",
+    "redux-wings": "0.0.10",
     "reselect": "^4.0.0",
     "resolve-url-loader": "^3.0.0",
     "sass-loader": "^7.1.0",
