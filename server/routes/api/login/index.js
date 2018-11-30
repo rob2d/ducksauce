@@ -13,18 +13,22 @@ router.post('/', (req, res) => {
 
     if(username && username.length && password && password.length) {
         SessionController.attemptLogin({ username, password })
-            .then( results => {
-                const output = results.map( u => {
-                    const { password, status, email, ...user } = u;
-                    return user;
-                })[0];
-                res.status(200).json(output);
+            .then( ([{ userEntry, token }]) => {
+                if(userEntry && token) {
+                    const { 
+                        password, status, email, 
+                        ...user 
+                    } = userEntry;
+                    
+                    res.status(200).json({ user, token });
+                } else {
+                    res.status(401).send({ message : 'user not found' });
+                }
             }).catch( error => {
-                console.log('error ->', error);
                 handle500Error({ req, res, error });
             })
     } else {
-        res.status(500).json({ message: 'Unknown error occured' });
+        res.status(500).json({ message: 'unknown error occured' });
     }
 });
 

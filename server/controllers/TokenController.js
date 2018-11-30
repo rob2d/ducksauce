@@ -1,6 +1,7 @@
-const fs  = require('fs');
+const fs = require('fs');
 const jwt = require('jsonwebtoken');
 const ControllerClass = global.require('utils/ControllerClass');
+const publicKey = process.env.JWT_SECRET;
 
 const tokenOptions = {
     expiresIn:  '2h'
@@ -8,16 +9,23 @@ const tokenOptions = {
 
 function handleCallback(resolve, reject) {
     return (err, result) => {
-        if(err) { reject(err)       } 
+        if(err) { reject(err)  }  
         else    { resolve(result) }
     }
 }
 
+/**
+ * Simple interface for dealing with JWT;
+ * 
+ * extracted into controller in case there
+ * will be an associated database layer
+ * 
+ */
 class TokenController extends ControllerClass {
 
-    signToken (userId) {
-        return new Promise((resolve, reject)=> {
-            jwt.sign({ userId }, process.env.JWT_SECRET, tokenOptions, 
+    signToken (username) {
+        return new Promise((resolve, reject) => {
+            jwt.sign({ username }, process.env.JWT_SECRET, tokenOptions, 
                 handleCallback(resolve, reject)
             );
         });
@@ -47,8 +55,5 @@ class TokenController extends ControllerClass {
     }
 }
 
-// exporting singletons; only defined
-// as class in case we'd like multiple
-// instances/oop later
-
-module.exports = new TokenController();
+const instance = new TokenController();
+module.exports = instance;
