@@ -1,9 +1,14 @@
 const router = require('express').Router();
-const UserController       = global.require('controllers/UserController');
-const apiUtilPath          = global.resolvePath('utils/api-requests/');
-const getPaginationParams  = global.require(apiUtilPath, 'getPaginationParams');
-const handle500Error       = global.require(apiUtilPath, 'handle500Error');
+const UserController = global.require('controllers/UserController');
+const apiUtilPath = global.resolvePath('utils/api-requests/');
+const getPaginationParams = global.require(apiUtilPath, 'getPaginationParams');
+const handle500Error = global.require(apiUtilPath, 'handle500Error');
 const handleResourceGetter = global.require(apiUtilPath, 'handleResourceGetter');
+const verifyToken = global.require('middleware/verifyToken');
+
+// block access to this part of API
+
+router.all('*', verifyToken);
 
 /**
  * @apiVersion 1.0.0
