@@ -23,9 +23,9 @@ function handleCallback(resolve, reject) {
  */
 class TokenController extends ControllerClass {
 
-    signToken (username) {
+    signToken ({ username, email }) {
         return new Promise((resolve, reject) => {
-            jwt.sign({ username }, process.env.JWT_SECRET, tokenOptions, 
+            jwt.sign({ username, email }, process.env.JWT_SECRET, tokenOptions, 
                 handleCallback(resolve, reject)
             );
         });
