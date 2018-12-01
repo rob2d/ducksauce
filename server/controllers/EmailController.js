@@ -1,3 +1,5 @@
+// @flow
+
 const ControllerClass = global.require('utils/ControllerClass');
 var nodemailer = require('nodemailer');
 

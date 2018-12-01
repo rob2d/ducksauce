@@ -2,25 +2,9 @@ import { createActions } from 'redux-wings'
 import api from 'api'
 import appHistory from 'utils/appHistory'
 
-/**
- * 
- * @property {String}  LOGIN_REQUEST
- * @property {String}  LOGOUT_REQUEST
- * @property {String}  LOGIN_ERROR
- * @property {String}  LOGOUT_REQUEST
- * @property {String}  LOGOUT_SUCCESS
- * @property {String}  LOGOUT_ERROR
- * 
- * @property {function} loginRequest
- * @property {function} logoutRequest
- * 
- */
-const actions = {};
-
-createAsyncActions({
-    actions,
+const { actions, asyncReducer } = createActions({
     sliceNamespace : 'session',
-    actionParams : [{
+    actions : [{
         namespace : 'login',
         requestCaller (/*{ username, password }*/) {
             const username = 'robftw', password = 'testpass';
@@ -30,23 +14,24 @@ createAsyncActions({
                     appHistory.goTo('/feedback/share');
                     resolve(result);
                 }));
-        }
+        },
+        stateVariable : 'loginState'
     }, {
-
         namespace : 'createAccount',
         requestCaller (params) {
             return api.createUser(params);
-        }
+        },
+        stateVariable : 'createAccountState'
     }
 ]});
 
 
 actions.LOGOUT = 'session/LOGOUT';
 actions.logout = ()=> ({
-    type    : actions.LOGOUT
+    type : actions.LOGOUT
 });
 
-const  { 
+const {
     loginRequest,
     logout, 
     createAccountRequest,
@@ -59,9 +44,13 @@ const  {
     CREATE_ACCOUNT_ERROR
 } = actions;
 
-export default actions
+export default {
+    ...actions,
+    asyncReducer
+}
 
 export {
+    asyncReducer,
     loginRequest,
     logout,
     createAccountRequest,

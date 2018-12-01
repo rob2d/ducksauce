@@ -24,7 +24,9 @@ module.exports = function(req, res, next) {
 
       // otherwise, throw auth error back to user
       res.status(400)
-        .json({ message : 'invalid auth token provided' });
+        .json({ 
+          message : 'invalid auth token provided' 
+        });
   
     });
 };
