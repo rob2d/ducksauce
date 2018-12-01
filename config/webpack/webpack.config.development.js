@@ -7,15 +7,15 @@ module.exports = {
             use : {
                 loader: "babel-loader",
                 options : {
-                    // This is a feature of `babel-loader` for webpack 
-                    // (not Babel itself). It enables caching results 
-                    // in ./node_modules/.cache/babel-loader/ dir 
-                    // for faster rebuilds.
-                    
                     cacheDirectory : true,
                     plugins : [ 
                         '@babel/plugin-proposal-export-default-from',
                         'react-hot-loader/babel' 
+                    ],
+                    presets : [
+                        "@babel/preset-env",
+                        "@babel/preset-react",
+                        "@babel/preset-flow"
                     ]
                 }
             }
