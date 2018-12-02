@@ -32,37 +32,37 @@ global.require = function(...args) {
 // basepath (__base), and require node 
 // modules
 
-const envFile               = require('dotenv').config(), // funnel process.env vars
-      express               = require('express'),
-      path                  = require('path'),
-      fs                    = require('fs'),
-      EventEmitter          = require('events'),
-      app                   = express(),
-      http                  = require('http'),
-      https                 = require('https'),
-      cors                  = require('cors'),
-      helmet                = require('helmet'),
-      argv                  = require('yargs').argv, //grabs our app arguments
-      colors                = require('colors'),
-      controllers           = require('./controllers'),
-      bodyParser            = require('body-parser'),
+const envFile = require('dotenv').config(), // funnel process.env vars
+      express = require('express'),
+      path = require('path'),
+      fs = require('fs'),
+      EventEmitter = require('events'),
+      app = express(),
+      http = require('http'),
+      https = require('https'),
+      cors = require('cors'),
+      helmet = require('helmet'),
+      argv = require('yargs').argv, //grabs our app arguments
+      colors = require('colors'),
+      controllers = require('./controllers'),
+      bodyParser = require('body-parser'),
       createMongoConnection = require( './utils/db/createMongoConnection' ),
-      port         = argv.port || process.env.PORT || 3002,
-      env          = process.env.NODE_ENV || 'development';
+      port = argv.port || process.env.PORT || 3002,
+      env = process.env.NODE_ENV || 'development';
       
 
 let sslConfig = (()=> {
     if(argv.https) {
         let certPath = argv.ssl_cert,
-            keyPath  = argv.ssl_key,
-            caPath   = argv.ssl_ca,
-            config   = { https : true, options : {} };      
+            keyPath = argv.ssl_key,
+            caPath = argv.ssl_ca,
+            config = { https : true, options : {} };      
 
             if(caPath) {
                 config.options.ca = fs.readFileSync(caPath);
             }
             else if(keyPath && certPath) {
-                config.options.key  = fs.readFileSync(keyPath);
+                config.options.key = fs.readFileSync(keyPath);
                 config.options.cert = fs.readFileSync(certPath);
             }
             else {
@@ -147,10 +147,10 @@ app.get('*', function(req,res) {
 // user.
 
 let startServer = server => {
-let host     = server.address().address,
-    port     = server.address().port,
-    version  = require('./../package.json').version,
-    appName  = require('./../package.json').name,
+let host = server.address().address,
+    port = server.address().port,
+    version = require('./../package.json').version,
+    appName = require('./../package.json').name,
     protocol = sslConfig.https ? 'https' : 'http';
 
     host = (host == '0.0.0.0'|| host == '::') ? 'localhost' : host;
